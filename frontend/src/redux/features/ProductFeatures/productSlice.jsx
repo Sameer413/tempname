@@ -28,23 +28,7 @@ export const fetchProductD = createAsyncThunk(
     }
 );
 
-export const addToCart = createAsyncThunk(
-    'product/addToCart',
-    async (credentials, { rejectWithValue }) => {
-        try {
-            const apiResponse = await axios.post(`http://localhost:5000/cart/new/${credentials}`,
-                {},
-                {
-                    withCredentials: true
-                });
 
-            return apiResponse.data;
-        } catch (error) {
-            console.log(error.response.data);
-            return rejectWithValue(error.response.data)
-        }
-    }
-);
 
 const productSlice = createSlice({
     name: 'product',
@@ -81,17 +65,7 @@ const productSlice = createSlice({
                 state.loading = false;
                 state.error = action.payload.message;
             })
-            .addCase(addToCart.pending, (state) => {
-                state.loading = true;
-                state.error = null;
-            })
-            .addCase(addToCart.fulfilled, (state, action) => {
-                state.loading = false;
-            })
-            .addCase(addToCart.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload.message
-            })
+
     }
 });
 

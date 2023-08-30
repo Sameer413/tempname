@@ -3,8 +3,8 @@ import './ProdDetailImg.css'
 import img from '../../assets/iphone.webp'
 import { AiOutlineShoppingCart, AiFillThunderbolt } from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../../redux/features/ProductFeatures/productSlice'
 import { useParams } from 'react-router-dom'
+import { addToCart } from '../../redux/features/ProductFeatures/cartSlice'
 
 const ProdDetailImg = ({ product }) => {
     console.log(product);

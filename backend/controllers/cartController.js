@@ -26,6 +26,7 @@ export const newCartProduct = catchAsync(async (req, res, next) => {
         return next(new ErrorHandler("Product Already added", 200));
     } else {
         cart.products.push({ product: req.params._id });
+
     }
     await cart.save();
 
