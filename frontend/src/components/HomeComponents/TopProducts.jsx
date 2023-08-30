@@ -3,6 +3,7 @@ import { styled } from 'styled-components'
 import adDisplay from '../../assets/adDisplay.webp'
 import { topProducts } from '../../../data'
 import { IoIosArrowBack } from 'react-icons/io'
+import { Link } from 'react-router-dom'
 
 
 const TopProducts = ({ advertise }) => {
@@ -118,17 +119,19 @@ const Wrapper = styled.div`
 // Cart
 const ProductCart = ({ img, title, title1 }) => {
     return (
-        <CartWrapper className="top-product-cart">
-            <div className="top-product-cart-img">
-                <img src={img} alt="" />
-            </div>
-            <div className="top-product-cart-title">
-                {title}
-            </div>
-            <div className="top-product-cart-title" style={{ fontWeight: 600, }}>
-                {title1}
-            </div>
-        </CartWrapper>
+        <Link to={"/products"} style={{ color: "#000" }}>
+            <CartWrapper className="top-product-cart" >
+                <div className="top-product-cart-img">
+                    <img src={img} alt="" />
+                </div>
+                <div className="top-product-cart-title">
+                    {title}
+                </div>
+                <div className="top-product-cart-title" style={{ fontWeight: 600, }}>
+                    {title1}
+                </div>
+            </CartWrapper>
+        </Link>
     );
 }
 

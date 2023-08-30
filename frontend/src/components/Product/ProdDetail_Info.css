@@ -1,7 +1,7 @@
 .ProdDetail_Info {
     width: 66.66%;
     padding-left: 24px;
-    height: 1100vh;
+    /* height: 1100vh; */
 }
 
 .prod-info {
@@ -13,6 +13,7 @@
     font-size: 1.125rem;
     font-weight: 400;
     color: #212121;
+    margin-bottom: 12px;
 }
 
 .prod-rating {

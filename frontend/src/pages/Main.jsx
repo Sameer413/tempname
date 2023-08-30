@@ -12,13 +12,14 @@ import MyOrders from "./User/MyOrders";
 import Cart from "./Product/Cart";
 import Checkout from "./Checkout/Checkout";
 
-const Main = () => {
+const Main = (props) => {
+    const { isAuthenticated } = props;
     return (
         <div>
             <BrowserRouter>
 
                 <Routes>
-                    <Route path="/" element={<SharedLayout />}>
+                    <Route path="/" element={<SharedLayout isAuthenticated={isAuthenticated} />}>
                         <Route index element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<SignUp />} />

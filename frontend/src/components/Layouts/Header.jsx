@@ -6,11 +6,17 @@ import Search from '../../container/Header/Search'
 import { CiShop, CiLogout } from 'react-icons/ci'
 import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai'
 import OrderSvg from '../../assets/orders.svg'
+import { useDispatch } from 'react-redux'
+import { logoutUser } from '../../redux/features/UserFeatures/userSlice'
 
+const Header = ({ isAuthenticated }) => {
 
-const Header = () => {
+    const user = isAuthenticated;
+    const dispatch = useDispatch();
 
-    const user = true;
+    const logoutHandler = () => {
+        dispatch(logoutUser())
+    }
 
     return (
         <header className="header">
@@ -46,11 +52,11 @@ const Header = () => {
                     <Link to={'/login'}>
                         <AiOutlineUser className='hovering-icon' size={24} style={{ marginRight: "8px" }} />
                         <span>
-                            Sign in
+                            {user ? "My Account" : "Sign in"}
                         </span>
                     </Link>
                     {/* Hover Menu */}
-                    <div className="sign-up-menu">
+                    <div className="sign-up-menu" {...user && ({ style: { right: "95px" } })}>
                         {!user && (
                             <div className="sign-up-opt" style={{ borderBottom: '1px solid #e0e0e0', justifyContent: 'space-between' }}>
                                 <span style={{ color: "#000" }}>New Customer?</span>
@@ -67,8 +73,11 @@ const Header = () => {
                             <div className="sign-up-opt-img" style={{ marginRight: '5px' }}> <img src={OrderSvg} alt="" /> </div>
                             Orders
                         </div>
-                        {user && <div className="sign-up-opt">
-                            <div className="sign-up-opt-img" style={{ marginRight: '5px' }}> <CiLogout size={24} /> </div>
+                        {user && <div className="sign-up-opt" onClick={logoutHandler}>
+                            <div
+                                className="sign-up-opt-img" style={{ marginRight: '5px' }}>
+                                <CiLogout size={24} />
+                            </div>
                             Logout
                         </div>}
                     </div>

@@ -1,8 +1,9 @@
 import './Login.css'
-import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { Link, useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
 import { useState } from 'react'
 import { loginUser } from '../../redux/features/UserFeatures/userSlice'
+import Loader from '../../components/Layouts/Loader'
 
 
 const Login = () => {
@@ -10,10 +11,16 @@ const Login = () => {
     const [password, setPassword] = useState('');
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { loading } = useSelector(state => state.user)
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(loginUser({ email, password }));
+        const apiResponse = await dispatch(loginUser({ email, password }));
+        console.log(apiResponse.type);
+        if (apiResponse.type === "user/loginUser/fulfilled") {
+            navigate('/')
+        }
     }
 
 
@@ -26,41 +33,49 @@ const Login = () => {
                     <p>Get access to your Orders, Whishlist and Recommendations</p>
                 </div>
 
-                <div className="login-right">
-                    <form action="" onSubmit={handleSubmit}>
-                        <div className="login-field">
-                            <input
-                                type="email"
-                                value={email}
-                                onChange={e => setEmail(e.target.value)}
-                            />
-                            {/* <span></span> */}
-                            <label>Email</label>
-                        </div>
-                        <div className="login-field">
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                            />
-                            {/* <span></span> */}
-                            <label>Password</label>
-                        </div>
+                {loading ? (
+                    <Loader />
+                ) : (
+                    <div className="login-right">
+                        <form action="" onSubmit={handleSubmit}>
+                            <div className="login-field">
+                                <input
+                                    name='email'
+                                    type="email"
+                                    value={email}
+                                    onChange={e => setEmail(e.target.value)}
+                                />
+                                {/* <span></span> */}
+                                <label>Email</label>
+                            </div>
+                            <div className="login-field">
+                                <input
+                                    name='password'
+                                    type="password"
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                />
+                                {/* <span></span> */}
+                                <label>Password</label>
+                            </div>
 
 
-                        <div className="auth-text">
-                            By continuing, you agree to Ecommerce's
-                            <span> Terms of Use </span>
-                            and
-                            <span> Privacy Policy</span>
-                        </div>
-                        <div className="login-btn">
-                            <button>Login</button>
-                        </div>
-                    </form>
+                            <div className="auth-text">
+                                By continuing, you agree to Ecommerce's
+                                <span> Terms of Use </span>
+                                and
+                                <span> Privacy Policy</span>
+                            </div>
+                            <div className="login-btn">
+                                <button>Login</button>
+                            </div>
+                        </form>
 
-                    <div><Link to={'/signup'} style={{ color: " #2874f0" }}>New to Ecommerce? Create an account</Link></div>
-                </div>
+                        <div><Link to={'/signup'} style={{ color: " #2874f0" }}>New to Ecommerce? Create an account</Link></div>
+                    </div>
+                )
+
+                }
             </div>
         </div>
     )

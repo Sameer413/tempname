@@ -4,15 +4,18 @@ import ProductList from "../../components/Products/ProductList";
 import { useDispatch } from 'react-redux'
 import { useEffect } from "react";
 import { fetchProducts } from "../../redux/features/ProductFeatures/productSlice";
+
 const Products = () => {
     const dispatch = useDispatch();
-
+    // const { loading } = useSelector(state => state.product)
     useEffect(() => {
         dispatch(fetchProducts())
     }, [])
 
+
     return (
         <Wrapper>
+
             <div>
                 <Filter />
                 <ProductList />

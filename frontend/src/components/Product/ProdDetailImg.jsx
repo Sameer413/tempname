@@ -2,8 +2,20 @@ import { styled } from 'styled-components'
 import './ProdDetailImg.css'
 import img from '../../assets/iphone.webp'
 import { AiOutlineShoppingCart, AiFillThunderbolt } from 'react-icons/ai'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart } from '../../redux/features/ProductFeatures/productSlice'
+import { useParams } from 'react-router-dom'
 
-const ProdDetailImg = () => {
+const ProdDetailImg = ({ product }) => {
+    console.log(product);
+
+    const dispatch = useDispatch();
+    const params = useParams();
+
+    const newCartItemHandler = () => {
+        dispatch(addToCart(params.id));
+    }
+
     return (
         <Wrapper >
 
@@ -11,7 +23,7 @@ const ProdDetailImg = () => {
                 <img src={img} alt="" />
             </div>
             <div className="prod-d-btn">
-                <div className="prod-cart">
+                <div className="prod-cart" onClick={newCartItemHandler}>
                     <button><AiOutlineShoppingCart size={15} /> ADD TO CART</button>
                 </div>
                 <div className="prod-buy">

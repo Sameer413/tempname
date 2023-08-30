@@ -68,7 +68,7 @@
     pointer-events: none;
     left: 0;
     top: 0;
-    transform: translateY(10px);
+    transform: translateY(-10px);
     transition: transform .2s ease;
     transform-origin: left;
 }

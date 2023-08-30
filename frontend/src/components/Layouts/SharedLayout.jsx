@@ -2,10 +2,10 @@ import { Outlet } from 'react-router-dom'
 import Header from './Header'
 import Footer from './Footer'
 
-const SharedLayout = () => {
+const SharedLayout = ({ isAuthenticated }) => {
     return (
         <>
-            <Header />
+            <Header isAuthenticated={isAuthenticated} />
             <Outlet />
             <Footer />
         </>

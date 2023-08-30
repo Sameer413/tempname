@@ -13,10 +13,11 @@ export const newCartProduct = catchAsync(async (req, res, next) => {
 
     // Creating the Cart for the given user if not 
     if (!cart) {
-        await Cart.create({ user, products: [] });
+        await Cart.create({ user: req.user._id, products: [] });
     }
 
     // Checking if product already exists or not 
+
     const existingProduct = await cart.products.find(item => item.product.toString() === req.params._id);
 
     // 1. If Product already exists then doing nothing

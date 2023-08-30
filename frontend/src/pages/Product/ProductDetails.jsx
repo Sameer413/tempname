@@ -1,13 +1,35 @@
 import { styled } from 'styled-components'
 import ProdDetailImg from '../../components/Product/ProdDetailImg';
 import ProdDetail_Info from '../../components/Product/ProdDetail_Info';
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom'
+import { fetchProductD } from '../../redux/features/ProductFeatures/productSlice';
 
 const ProductDetails = () => {
+
+    const dispatch = useDispatch();
+    const params = useParams();
+
+    useEffect(() => {
+        { dispatch(fetchProductD(params.id)) }
+    }, [])
+
+    const { product } = useSelector(state => state.product);
+
     return (
         <Wrapper>
             <div className="product-details">
-                <ProdDetailImg />
-                <ProdDetail_Info />
+                <ProdDetailImg
+                    product={product?.product}
+                />
+                <ProdDetail_Info
+                    name={product?.product.name}
+                    description={product?.product.description}
+                    price={product?.product.price}
+                    ratings={product?.product.ratings}
+                    reviews={product?.product.reviews}
+                />
             </div>
         </Wrapper>
     )

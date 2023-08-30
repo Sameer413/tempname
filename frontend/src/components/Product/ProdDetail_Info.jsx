@@ -1,13 +1,15 @@
 import { BsFillStarFill } from 'react-icons/bs'
 import './ProdDetail_Info.css'
 
-const ProdDetail_Info = () => {
+
+
+const ProdDetail_Info = ({ name, ratings, reviews, price, description }) => {
     return (
         <div className="ProdDetail_Info">
             <div className="prod-detail-main">
                 <div className="prod-info">
                     <div className="prod-title">
-                        <span>APPLE iPhone 11 (White, 64GB)</span>
+                        <span>{name}</span>
                     </div>
                     <div className="prod-rating">
                         <span
@@ -21,18 +23,18 @@ const ProdDetail_Info = () => {
                             3.4 <BsFillStarFill size={10} color='white' />
                         </span>
                         <span style={{ color: "#878787", paddingLeft: "6px", fontSize: "14px" }}>
-                            1,99,602 Ratings & 11,380 Reviews
+                            {ratings?.length} Ratings & {reviews?.length} Reviews
                         </span>
                     </div>
                     <div className="prod-prices">
                         <div className="prod-price">
-                            ₹41,999
+                            ₹{discountPrice(price)}
                         </div>
                         <div className="prod-original-price">
-                            ₹41,999
+                            ₹{price}
                         </div>
                         <div className="prod-discount">
-                            4% off
+                            36% off
                         </div>
                     </div>
                 </div>
@@ -96,7 +98,7 @@ const ProdDetail_Info = () => {
                     <div className="prod-more-main">
                         <div className="more-detail-title">Description</div>
                         <p className="more-detail-info" style={{ fontWeight: 500 }}>
-                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quo voluptate adipisci reiciendis, est hic quisquam numquam eos, tempora architecto eaque nihil odio dolorem molestias voluptatibus error ab corporis?
+                            {description}
                         </p>
                     </div>
                 </div>
@@ -106,3 +108,8 @@ const ProdDetail_Info = () => {
 }
 
 export default ProdDetail_Info
+
+
+const discountPrice = (initialPrice) => {
+    return Math.floor(initialPrice - ((36 / 100) * initialPrice));
+}

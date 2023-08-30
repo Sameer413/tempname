@@ -3,10 +3,23 @@ import { BsFillStarFill } from 'react-icons/bs'
 import img from '../../assets/iphone.webp'
 import { Link } from 'react-router-dom'
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+    const {
+        productName,
+        price,
+        description,
+        ratings,
+        reviews,
+        _id
+    } = props;
+
+    const discountPrice = (initialPrice) => {
+        return Math.floor(initialPrice - ((36 / 100) * initialPrice));
+    }
+
     return (
         <div className="productCard">
-            <Link className="productCard-main">
+            <Link to={`/product/${_id}`} className="productCard-main">
                 <div className="product-card-img">
                     <img src={img} alt="" />
                 </div>
@@ -15,26 +28,26 @@ const ProductCard = () => {
                     <div className="product-card-details-main">
                         <div className="product-card-detail">
                             <div className="product-card-name">
-                                APPLE iPhone 11 (White, 64GB)
+                                {productName || `APPLE iPhone 11 (White, 64GB)`}
                             </div>
                             <div className="product-card-ratings">
                                 <div className="card-rating">
                                     <BsFillStarFill size={10} /> 3.4
                                 </div>
                                 <span className="card-reviews">
-                                    1,6465 Ratings & 1,569 Reviews
+                                    {ratings.length || 0} Ratings & {reviews.length} Reviews
                                 </span>
                             </div>
                             <div className="card-description">
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora, temporibus quasi incidunt neque soluta quod, aspernatur voluptatum, ad laudantium suscipit illum dolore distinctio debitis nesciunt?
+                                {description}
                             </div>
                         </div>
                         {/*  */}
                         <div className="product-card-price">
                             <div className="card-price-main">
-                                <div className="price-main">₹44,999</div>
-                                <div className="price-main-original">₹48,999</div>
-                                <div className="price-main-off">7% off</div>
+                                <div className="price-main">₹{discountPrice(price)}</div>
+                                <div className="price-main-original">₹{price}</div>
+                                <div className="price-main-off">36% off</div>
                             </div>
 
                             <div className="card-delivery">
