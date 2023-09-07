@@ -13,7 +13,7 @@ const Header = ({ isAuthenticated }) => {
 
     const user = isAuthenticated;
     const dispatch = useDispatch();
-
+    console.log(isAuthenticated);
     const logoutHandler = () => {
         dispatch(logoutUser())
     }
@@ -49,7 +49,7 @@ const Header = ({ isAuthenticated }) => {
                     </Link>
                 </div>
                 <div className="header-menu-item sign-up-hover">
-                    <Link to={'/login'}>
+                    <Link to={user ? '/profile' : '/login'}>
                         <AiOutlineUser className='hovering-icon' size={24} style={{ marginRight: "8px" }} />
                         <span>
                             {user ? "My Account" : "Sign in"}
@@ -65,14 +65,14 @@ const Header = ({ isAuthenticated }) => {
                                 </Link>
                             </div>
                         )}
-                        <div className="sign-up-opt">
+                        <Link to={"/profile"} className="sign-up-opt">
                             <div className="sign-up-opt-img" style={{ marginRight: '5px' }}><AiOutlineUser size={24} /></div>
                             My Profile
-                        </div>
-                        <div className="sign-up-opt">
+                        </Link>
+                        <Link to={"/myorders"} className="sign-up-opt">
                             <div className="sign-up-opt-img" style={{ marginRight: '5px' }}> <img src={OrderSvg} alt="" /> </div>
                             Orders
-                        </div>
+                        </Link>
                         {user && <div className="sign-up-opt" onClick={logoutHandler}>
                             <div
                                 className="sign-up-opt-img" style={{ marginRight: '5px' }}>

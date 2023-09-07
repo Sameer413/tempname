@@ -25,11 +25,13 @@ app.use(
 import userRoutes from "./routes/userRoutes.js"
 import productRoutes from "./routes/productRoutes.js"
 import cartRoutes from "./routes/cartRoutes.js"
+import adminRoutes from "./routes/adminRoutes.js"
 import cookieParser from "cookie-parser";
 
 app.use(userRoutes);
 app.use(productRoutes);
 app.use(cartRoutes);
+app.use(adminRoutes)
 
 export default app;
 

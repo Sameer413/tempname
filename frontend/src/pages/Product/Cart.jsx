@@ -1,22 +1,36 @@
 // import React from 'react'
-
 import { styled } from "styled-components"
 import CartProduct from "../../container/Products/CartProduct"
+import { useDispatch, useSelector } from "react-redux"
+import { useCallback, useEffect, useState } from "react";
+import { cartProducts } from "../../redux/features/ProductFeatures/cartSlice";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
+    const dispatch = useDispatch();
+    const { totalPrice, products } = useSelector(state => state.cart.cart);
+
+    useEffect(() => {
+        dispatch(cartProducts())
+    }, [])
+
+
     return (
-        <Wrapper>
+        <Wrapper >
             <div className="cart-left">
-                <CartProduct />
-                <CartProduct />
-                <CartProduct />
-                <CartProduct />
-                <CartProduct />
+                {/* <CartProduct /> */}
+                {products && products.map((item) => {
+                    return <CartProduct
+                        product={item}
+                        key={item.product}
+
+                    />
+                })}
 
 
-                <div className="cart-left-bottom">
+                <Link to={"/checkout"} className="cart-left-bottom">
                     <button>Place Order</button>
-                </div>
+                </Link>
             </div>
             <div className="cart-right">
                 <div className="cart-right-heading">Price Details</div>
@@ -34,7 +48,7 @@ const Cart = () => {
                 </div>
                 <div className="cart-right-total">
                     <span>Total Ammount</span>
-                    <span>₹59,999</span>
+                    <span>₹{totalPrice ? totalPrice : ''}</span>
                 </div>
             </div>
 
@@ -55,6 +69,7 @@ const Wrapper = styled.div`
         width: 70%;
         box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 2px 0px;
         position: relative;
+        height: 100%;
 
         &>.cart-left-bottom{
             position: sticky;
@@ -68,6 +83,7 @@ const Wrapper = styled.div`
             padding: 16px 22px;
             box-shadow: 0 -2px 10px 0 rgba(0,0,0,.1);
             text-align: right;
+            display: block;
 
             &>button{
                 background: #fb641b;

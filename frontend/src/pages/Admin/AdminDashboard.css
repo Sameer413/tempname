@@ -1,0 +1,35 @@
+.admin-dashboard {
+    width: 80%;
+    padding: 20px 30px;
+    background-color: var(--bg-colour-main);
+}
+
+.admin-dashboard-main {
+    width: 100%;
+}
+
+.admin-dash-top {
+    display: flex;
+    width: 100%;
+}
+
+.dash-top-cart {
+    background: blue;
+    margin: 0 12px;
+    padding: 30px;
+    color: #fff;
+    border-radius: 10px;
+    width: 250px;
+}
+
+.dash-top-cart div {
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #f2e9f4;
+}
+
+.dash-top-cart span {
+    font-size: 24px;
+    font-weight: 600;
+}

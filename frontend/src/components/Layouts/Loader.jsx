@@ -1,10 +1,10 @@
 import { styled } from "styled-components"
 
 
-const Loader = () => {
+const Loader = ({ minheight, width, size }) => {
     return (
-        <Wrapper>
-            <div></div>
+        <Wrapper style={{ minWidth: minheight, width: width }}>
+            <div style={{ width: size, height: size }}></div>
         </Wrapper>
     )
 }

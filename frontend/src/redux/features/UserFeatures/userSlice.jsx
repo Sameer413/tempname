@@ -13,7 +13,7 @@ export const loginUser = createAsyncThunk(
                 },
                 withCredentials: true,
             });
-            console.log(apiResponse);
+
             return apiResponse.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
@@ -54,6 +54,17 @@ export const logoutUser = createAsyncThunk(
     }
 );
 
+export const userMe = createAsyncThunk(
+    'user/me',
+    async (_, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.get('http://localhost:5000/me', { withCredentials: true });
+            return apiResponse.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data)
+        }
+    }
+)
 
 
 const initialState = {
@@ -79,9 +90,6 @@ const userSlice = createSlice({
                 state.isAuthenticated = true;
                 state.user = action.payload;
                 state.error = null;
-                console.log(action);
-                localStorage.setItem("userToken", action.payload.token)
-
             })
             .addCase(loginUser.rejected, (state, action) => {
                 state.loading = false;
@@ -93,7 +101,7 @@ const userSlice = createSlice({
                 state.loading = true;
                 state.error = null;
             })
-            .addCase(logoutUser.fulfilled, (state, action) => {
+            .addCase(logoutUser.fulfilled, (state) => {
                 state.loading = false;
                 state.isAuthenticated = false;
                 state.user = null;
@@ -118,6 +126,21 @@ const userSlice = createSlice({
                 state.isAuthenticated = false;
                 state.user = null;
                 state.error = action.payload ? action.payload.message : 'Failed to Register';
+            })
+            .addCase(userMe.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(userMe.fulfilled, (state, action) => {
+                state.loading = false;
+                state.isAuthenticated = true;
+                state.user = action.payload.data;
+                state.error = null;
+            })
+            .addCase(userMe.rejected, (state, action) => {
+                state.loading = false;
+                state.user = null;
+                state.error = action.payload ? action.payload.message : 'Failed to Load User';
             })
     }
 });

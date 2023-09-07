@@ -120,3 +120,22 @@ export const changePassword = catchAsync(async (req, res, next) => {
         message: "Password Changed Successfully!"
     });
 });
+
+export const isAuth = catchAsync(async (req, res, next) => {
+    res.status(200).json({
+        success: true
+    })
+});
+
+export const user = catchAsync(async (req, res, next) => {
+    const user = await User.findById(req.user.id);
+
+    if (!user) {
+        return next(new ErrorHandler("Please login", 404));
+    }
+
+    res.status(200).json({
+        success: true,
+        user
+    });
+})

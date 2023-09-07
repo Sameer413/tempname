@@ -28,6 +28,5 @@ export const isAdmin = catchAsync(async (req, res, next) => {
             )
         );
     }
-
     next();
 });

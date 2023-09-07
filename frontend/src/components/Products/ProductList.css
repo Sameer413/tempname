@@ -101,7 +101,8 @@
     color: #000;
 }
 
-.product-card-ratings {
+.product-card-ratings,
+.adm-product-ratings {
     margin-top: 6px;
 }
 

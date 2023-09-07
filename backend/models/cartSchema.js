@@ -17,6 +17,7 @@ const cartSchema = new mongoose.Schema({
             default: 1,
             min: 1,
             max: 10,
+            required: true
         },
     }],
     createdAt: {

@@ -1,6 +1,5 @@
 import catchAsync from "../middleware/catchAsync.js"
 import { Product } from "../models/productSchema.js"
-import { User } from "../models/userSchema.js";
 import ErrorHandler from "../utils/ErrorHandler.js";
 
 export const getAllProducts = catchAsync(async (req, res, next) => {
