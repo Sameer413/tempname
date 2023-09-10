@@ -1,11 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components'
 import avatar from '../../assets/profile_avatar.svg'
+import { useDispatch, useSelector } from 'react-redux'
+import { allusers, updateRole } from '../../redux/features/AdminFeatures/AdminSlice'
 
-const AdminUserCard = () => {
-    const [select, setSelect] = useState("user")
+const AdminUserCard = ({ name, email, role, id, dispatch }) => {
+    const [select, setSelect] = useState(role)
     const selectChange = (e) => {
         setSelect(e.target.value)
+    }
+
+    const submitHandler = (role) => {
+        dispatch(updateRole({ role: role, user: id }));
     }
 
     return (
@@ -14,16 +20,16 @@ const AdminUserCard = () => {
                 <div className="adm-user-details">
                     <img src={avatar} alt="" />
                     <div>
-                        <span>Sameer Nimje</span>
-                        <span>Sameernimje@ecommerce.com</span>
+                        <span>{name ? name : ""}</span>
+                        <span>{email ? email : ""}</span>
                     </div>
                 </div>
                 <div className="adm-user-role">
                     <select value={select} onChange={selectChange}>
-                        <option>User</option>
-                        <option>Admin</option>
+                        <option>{role}</option>
+                        <option>{role === "user" ? "admin" : "user"}</option>
                     </select>
-                    {select === "Admin" && <button>Save</button>}
+                    {select === (role === "admin" ? "user" : "admin") && <button onClick={() => submitHandler(select)}>Save</button>}
                 </div>
             </div>
         </div>
@@ -31,12 +37,27 @@ const AdminUserCard = () => {
 }
 
 const Users = () => {
+
+    const dispatch = useDispatch();
+    const { users } = useSelector(state => state.admin);
+
+    useEffect(() => {
+        dispatch(allusers())
+    }, []);
+
+
     return (
         <Wrapper>
-            <AdminUserCard />
-            <AdminUserCard />
-            <AdminUserCard />
-            <AdminUserCard />
+            {users?.users?.map((user) => (
+                <AdminUserCard
+                    key={user?._id}
+                    name={user?.firstName + " " + user?.lastName}
+                    email={user?.email}
+                    role={user?.role}
+                    id={user?._id}
+                    dispatch={dispatch}
+                />
+            ))}
         </Wrapper>
     )
 }

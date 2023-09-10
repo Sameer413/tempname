@@ -1,11 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import img from '../../assets/iphone.webp'
 import { BsFillStarFill } from 'react-icons/bs'
 import './AdminProducts.css'
 import { styled } from 'styled-components'
+import { useDispatch, useSelector } from 'react-redux'
+import { adminProducts } from '../../redux/features/AdminFeatures/AdminSlice'
 
-const AdminProdCard = () => {
+
+const AdminProdCard = ({ name, description, price, reviews, ratings }) => {
     return (
         <div className="admin-product">
             <div className="admin-product-img">
@@ -14,22 +17,22 @@ const AdminProdCard = () => {
             {/*  */}
             <div className="admin-product-details">
                 <div className="adm-prod-name">
-                    Apple iPhone 15
+                    {name}
                 </div>
                 <div className="adm-product-ratings">
                     <div className="card-rating">
                         <BsFillStarFill size={10} /> 3.4
                     </div>
                     <span className="card-reviews">
-                        {0} Ratings & {0} Reviews
+                        {ratings?.length} Ratings & {reviews?.length} Reviews
                     </span>
                 </div>
                 <div className="adm-product-desc">
-                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Iusto autem a nulla nam id, inventore dolorum excepturi! Perferendis voluptates quidem facilis velit, explicabo error?
+                    {description}
                 </div>
             </div>
             <div className="card-price-main adm-prod-price">
-                <div className="price-main">₹{291}</div>
+                <div className="price-main">₹{price}</div>
                 <div className="price-main-original">₹{365}</div>
                 <div className="price-main-off">36% off</div>
                 <div className="adm-prod-update">
@@ -41,10 +44,26 @@ const AdminProdCard = () => {
     )
 }
 const AdminProducts = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(adminProducts())
+    }, [])
+
+    const { product } = useSelector(state => state.admin)
     return (
         <Wrapper>
-            <AdminProdCard />
-            <AdminProdCard />
+            {product && product?.products?.map((product) => (
+                <AdminProdCard
+                    key={product._id}
+                    name={product.name}
+                    description={product?.description}
+                    price={product?.price}
+                    reviews={product?.reviews}
+                    ratings={product?.ratings}
+                />
+            ))}
         </Wrapper>
     )
 }

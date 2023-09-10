@@ -56,7 +56,7 @@ const Checkout = () => {
                                     </div>
                                 </div>
                                 <div className="checkout-submit-btn">
-                                    <button onClick={() => { setOpen(!open) }}>Save And Deliver Here</button>
+                                    <button onClick={() => { setOpen(!open) }}>Deliver Here</button>
                                     <Link to={'/cart'}>cancel</Link>
 
                                 </div>
@@ -65,7 +65,7 @@ const Checkout = () => {
                     </div>
 
                     {/*  */}
-                    <div className="checkout-address">
+                    {/* <div className="checkout-address">
                         <div className="checkout-add-heading">
                             Payment
                         </div>
@@ -88,7 +88,7 @@ const Checkout = () => {
                                 <Link to={'/cart'}>cancel</Link>
                             </div>
                         </form>
-                    </div>
+                    </div> */}
                 </div>
 
                 {/*  */}

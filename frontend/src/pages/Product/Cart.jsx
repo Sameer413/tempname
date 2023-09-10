@@ -14,6 +14,11 @@ const Cart = () => {
         dispatch(cartProducts())
     }, [])
 
+    const saveProductIdsToLocalStorage = () => {
+        localStorage.removeItem('cartProductIds')
+        const productIds = products.map(item => item.product);
+        localStorage.setItem('cartProductIds', JSON.stringify(productIds));
+    }
 
     return (
         <Wrapper >
@@ -28,7 +33,7 @@ const Cart = () => {
                 })}
 
 
-                <Link to={"/checkout"} className="cart-left-bottom">
+                <Link to={"/checkout"} onClick={saveProductIdsToLocalStorage} className="cart-left-bottom">
                     <button>Place Order</button>
                 </Link>
             </div>

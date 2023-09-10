@@ -1,5 +1,3 @@
-// import React from 'react'
-
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./Home/Home"
 import SharedLayout from "../components/Layouts/SharedLayout";
@@ -20,7 +18,7 @@ import AdminProducts from "./Admin/AdminProducts";
 import AdminOrders from "./Admin/AdminOrders";
 
 const Main = (props) => {
-    const { isAuthenticated } = props;
+    const { isAuthenticated, role } = props;
 
 
 
@@ -29,7 +27,7 @@ const Main = (props) => {
             <BrowserRouter>
 
                 <Routes>
-                    <Route path="/" element={<SharedLayout isAuthenticated={isAuthenticated} />}>
+                    <Route path="/" element={<SharedLayout isAuthenticated={isAuthenticated} role={role} />}>
                         <Route index element={<Home />} />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<SignUp />} />
@@ -39,7 +37,9 @@ const Main = (props) => {
                         <Route path="/myorders" element={<MyOrders />} />
                         <Route path="/cart" element={<Cart />} />
                     </Route>
+
                     <Route path={"/checkout"} element={<Checkout />} />
+
                     <Route path={"/admin"} element={<AdminSharedLay />} >
                         <Route index element={<AdminDashboard />} />
                         <Route path="/admin/users" element={<Users />} />

@@ -88,4 +88,10 @@
     display: flex;
     align-items: center;
     color: #000;
+    transition: background 0.3s ease-in-out;
+}
+
+.sign-up-opt:hover {
+    background: #c1c1c1;
+    border-radius: 2px;
 }

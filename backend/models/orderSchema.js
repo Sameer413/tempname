@@ -11,44 +11,50 @@ const Schema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             required: true,
             ref: "Product"
-        }
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
     }],
-    price: {
+    totalPrice: {
         type: Number,
         required: true,
     },
     address: {
         name: {
             type: String,
-            required: true,
         },
         mobile: {
             type: Number,
-            required: true,
         },
         pincode: {
             type: Number,
-            required: true,
         },
         state: {
             type: String,
-            required: true,
         },
         address: {
             type: String,
-            required: true,
         },
         city: {
             type: String,
-            required: true,
         },
         landmark: {
             type: String,
         }
     },
-    price: {
-        type: Number,
-        required: true,
+    status: {
+        type: String,
+        default: "Processing"
+    },
+    date: {
+        type: Date,
+        default: Date.now
     }
 });
 

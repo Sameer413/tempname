@@ -16,6 +16,20 @@ const ProdDetailImg = ({ product }) => {
         dispatch(addToCart(params.id));
     }
 
+    const saveProductToLocalStorage = (product) => {
+        localStorage.removeItem('cartProducts')
+        const existingProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
+        existingProducts.push(product);
+        localStorage.setItem('cartProducts', JSON.stringify(existingProducts));
+    };
+    const price = product?.price;
+    // Example usage
+    const productToAdd = {
+        id: params.id,
+        qty: 1,
+        price: price
+    };
+
     return (
         <Wrapper >
 
@@ -26,7 +40,7 @@ const ProdDetailImg = ({ product }) => {
                 <div className="prod-cart" onClick={newCartItemHandler}>
                     <button><AiOutlineShoppingCart size={15} /> ADD TO CART</button>
                 </div>
-                <Link to={"/checkout"} className="prod-buy">
+                <Link to={"/checkout"} className="prod-buy" onClick={() => saveProductToLocalStorage(productToAdd)}>
                     <button><AiFillThunderbolt size={15} /> BUY NOW</button>
                 </Link>
 

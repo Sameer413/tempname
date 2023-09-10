@@ -8,8 +8,9 @@ import { AiOutlineUser, AiOutlineShoppingCart } from 'react-icons/ai'
 import OrderSvg from '../../assets/orders.svg'
 import { useDispatch } from 'react-redux'
 import { logoutUser } from '../../redux/features/UserFeatures/userSlice'
+import { BsBarChartLine } from 'react-icons/bs'
 
-const Header = ({ isAuthenticated }) => {
+const Header = ({ isAuthenticated, role }) => {
 
     const user = isAuthenticated;
     const dispatch = useDispatch();
@@ -69,6 +70,12 @@ const Header = ({ isAuthenticated }) => {
                             <div className="sign-up-opt-img" style={{ marginRight: '5px' }}><AiOutlineUser size={24} /></div>
                             My Profile
                         </Link>
+                        {role === "admin" &&
+                            <Link to={"/admin"} className="sign-up-opt">
+                                <div className="sign-up-opt-img" style={{ marginRight: '5px' }}><BsBarChartLine size={24} /></div>
+                                Dashboard
+                            </Link>
+                        }
                         <Link to={"/myorders"} className="sign-up-opt">
                             <div className="sign-up-opt-img" style={{ marginRight: '5px' }}> <img src={OrderSvg} alt="" /> </div>
                             Orders

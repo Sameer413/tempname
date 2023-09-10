@@ -6,14 +6,16 @@ import { userMe } from './redux/features/UserFeatures/userSlice';
 
 
 function App() {
-  const { isAuthenticated } = useSelector(state => state.user);
+  const { isAuthenticated, user } = useSelector(state => state.user);
   const dispatch = useDispatch();
+
   useEffect(() => {
     dispatch(userMe())
   }, [])
+
   return (
     <>
-      <Main isAuthenticated={isAuthenticated} />
+      <Main isAuthenticated={isAuthenticated} role={user?.user?.role} />
     </>
   )
 }
