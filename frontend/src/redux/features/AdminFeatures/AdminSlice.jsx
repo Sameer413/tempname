@@ -46,6 +46,59 @@ export const adminProducts = createAsyncThunk(
     }
 );
 
+export const adminGetProduct = createAsyncThunk(
+    'admin/getProduct',
+    async (id, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.get(`http://localhost:5000/product/${id}`, {
+                withCredentials: true
+            });
+
+            return apiResponse.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
+export const adminUpdateProduct = createAsyncThunk(
+    'admin/updateProduct',
+    async ({ id, credentials }, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.put(`http://localhost:5000/product/${id}`, JSON.stringify(credentials), {
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                withCredentials: true
+            });
+
+            return apiResponse.data;
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
+export const addProductAdmin = createAsyncThunk(
+    'admin/addProduct',
+    async (credentials, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.post(
+                'http://localhost:5000/product/new',
+                credentials,
+                {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    withCredentials: true,
+                }
+            )
+        } catch (error) {
+            return rejectWithValue(error.response.data);
+        }
+    }
+)
+
 const AdminSlice = createSlice({
     name: "Admin",
     initialState: {
@@ -71,7 +124,7 @@ const AdminSlice = createSlice({
             .addCase(updateRole.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(updateRole.fulfilled, (state, action) => {
+            .addCase(updateRole.fulfilled, (state) => {
                 state.loading = false;
             })
             .addCase(updateRole.rejected, (state, action) => {
@@ -89,7 +142,40 @@ const AdminSlice = createSlice({
                 state.loading = false;
                 state.error = action.error.message;
             })
-
+            .addCase(adminGetProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(adminGetProduct.fulfilled, (state, action) => {
+                state.loading = false;
+                state.product = action.payload;
+            })
+            .addCase(adminGetProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload.message;
+            })
+            .addCase(adminUpdateProduct.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(adminUpdateProduct.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(adminUpdateProduct.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
+            .addCase(addProductAdmin.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(addProductAdmin.fulfilled, (state) => {
+                state.loading = false;
+            })
+            .addCase(addProductAdmin.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.error.message
+            })
     }
 });
 

@@ -31,7 +31,6 @@ export const createUser = catchAsync(async (req, res, next) => {
         // });
         sendToken(res, newUser, `Welcome ${newUser.firstName + " " + newUser.lastName}`, 201);
     } catch (error) {
-        console.log(error);
         return next(new ErrorHandler("An error occurred", 500));
     }
 });

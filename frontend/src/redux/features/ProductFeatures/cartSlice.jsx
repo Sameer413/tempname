@@ -108,7 +108,6 @@ const cartSlice = createSlice({
             .addCase(updateCarQuantity.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.error.message;
-                console.log(action.error);
             })
             .addCase(removeCartProduct.pending, (state) => {
                 state.loading = false;

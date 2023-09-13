@@ -44,7 +44,7 @@ const Main = (props) => {
                         <Route index element={<AdminDashboard />} />
                         <Route path="/admin/users" element={<Users />} />
                         <Route path="/admin/addproduct" element={<AddProduct />} />
-                        <Route path="/admin/update/product" element={<UpdateProduct />} />
+                        <Route path="/admin/update/product/:id" element={<UpdateProduct />} />
                         <Route path="/admin/products" element={<AdminProducts />} />
                         <Route path="/admin/orders" element={<AdminOrders />} />
                     </Route>

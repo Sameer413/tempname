@@ -7,7 +7,11 @@ import ErrorHandler from "../utils/ErrorHandler.js";
 
 export const createOrder = catchAsync(async (req, res, next) => {
     const orderData = req.body;
+    orderData.user = req.user._id;
 
+    if (!orderData) {
+        return next(new ErrorHandler("Enter all fields", 400));
+    }
     const order = await Order.create(orderData);
 
     await order.save();

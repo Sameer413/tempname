@@ -1,8 +1,28 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './AddProduct.css'
 import { PiImagesThin } from 'react-icons/pi'
+import { useDispatch } from 'react-redux'
+import { addProductAdmin } from '../../redux/features/AdminFeatures/AdminSlice'
 
 const AddProduct = () => {
+
+    const dispatch = useDispatch()
+    const [prodName, setProdName] = useState('')
+    const [price, setPrice] = useState('')
+    const [category, setCategory] = useState('')
+    const [desc, setDesc] = useState('')
+
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        if (prodName === null || price === null || category === null || desc === null) {
+            console.log("enter all fields");
+        } else {
+            dispatch(addProductAdmin({ name: prodName, price: price, category: category, description: desc }));
+        }
+    }
+
+
     return (
         <div className="AddProduct">
             <div className="add-product-main">
@@ -17,28 +37,53 @@ const AddProduct = () => {
                         </div>
                     </div>
                     <div className="add-prod-right">
-                        <form action="">
+                        <form action="" onSubmit={submitHandler}>
                             <div className="add-prod-field">
                                 <label>Product Name</label>
-                                <input type="text" />
+                                <input
+                                    value={prodName}
+                                    onChange={(e) => setProdName(e.target.value)}
+                                    name="name"
+                                    type="text"
+                                />
                             </div>
                             <div className="add-prod-field">
                                 <label>Description</label>
-                                <input type="text" />
+                                <input
+                                    value={desc}
+                                    onChange={(e) => setDesc(e.target.value)}
+                                    name="description"
+                                    type="text"
+                                />
                             </div>
                             <div className="add-prod-field">
                                 <label>Category</label>
-                                <input type="text" />
+                                <input
+                                    value={category}
+                                    onChange={(e) => setCategory(e.target.value)}
+                                    name="category"
+                                    type="text"
+                                />
                             </div>
                             <div className="add-prod-field">
                                 <label>Price</label>
-                                <input type="number" />
+                                <input
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    name="price"
+                                    type="number"
+                                />
                             </div>
                             <div className="add-prod-field">
                                 <label>Discount</label>
-                                <input type="text" />
+                                <input
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    name="price"
+                                    type="text"
+                                />
                             </div>
-                            <button>Publish Product</button>
+                            <button type='submit'>Publish Product</button>
                         </form>
                     </div>
                 </div>

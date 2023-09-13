@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { adminProducts } from '../../redux/features/AdminFeatures/AdminSlice'
 
 
-const AdminProdCard = ({ name, description, price, reviews, ratings }) => {
+const AdminProdCard = ({ name, description, price, reviews, ratings, id }) => {
     return (
         <div className="admin-product">
             <div className="admin-product-img">
@@ -36,7 +36,7 @@ const AdminProdCard = ({ name, description, price, reviews, ratings }) => {
                 <div className="price-main-original">₹{365}</div>
                 <div className="price-main-off">36% off</div>
                 <div className="adm-prod-update">
-                    <button>Update</button>
+                    <Link to={`/admin/update/product/${id}`}>Update</Link>
                 </div>
             </div>
 
@@ -57,6 +57,7 @@ const AdminProducts = () => {
             {product && product?.products?.map((product) => (
                 <AdminProdCard
                     key={product._id}
+                    id={product?._id}
                     name={product.name}
                     description={product?.description}
                     price={product?.price}

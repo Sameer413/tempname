@@ -2,10 +2,36 @@ import { useState } from 'react'
 import './Checkout.css'
 import flipLogo from '../../assets/flip-logo.png'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { createOrder } from '../../redux/features/OrderFeatures/OrderSlic'
 
 const Checkout = () => {
+    const dispatch = useDispatch();
+
     const [open, setOpen] = useState(true)
 
+    const [name, setName] = useState('');
+    const [number, setNumber] = useState('');
+    const [pincode, setPincode] = useState('');
+    const [state, setState] = useState('')
+    const [address, setAddress] = useState('')
+    const [city, setCity] = useState('')
+    const [landmark, setLandmark] = useState('')
+
+    const addressData = {
+        name: name,
+        mobile: Number(number),
+        pincode: Number(pincode),
+        state: state,
+        address: address,
+        city: city,
+        landmark: landmark
+    }
+
+    const submitHandler = (e) => {
+        e.preventDefault()
+        dispatch(createOrder({ address: addressData }));
+    }
     return (
         <div className="checkout">
             <header className="checkout-header">
@@ -20,48 +46,73 @@ const Checkout = () => {
                     <div className="checkout-address">
                         <div className="checkout-add-heading">
                             Delivery Address
+                            <span
+                                style={{ marginLeft: "12px", cursor: "pointer", }}
+                                onMouseEnter={(e) => e.currentTarget.style.borderBottom = "1px solid #fff"}
+                                onMouseLeave={(e) => {
+                                    e.currentTarget.style.borderBottom = "none"; // Restore the original margin
+                                }}
+                                onClick={() => setOpen(!open)}
+                            >
+                                Edit
+                            </span>
                         </div>
 
-                        {open && (
-                            <form action="">
+
+                        <form action="">
+                            {open && (<>
                                 <div className="checkout-form">
 
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>Name</label>
-                                    </div>
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>10-digit mobile number</label>
-                                    </div>
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>Pincode</label>
-                                    </div>
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>state</label>
-                                    </div>
+                                    <InputField state={name} setState={setName} title={"Name"} name={"name"} />
+                                    <InputField state={number} setState={setNumber} title={"10-digit mobile number"} name={"mobile"} />
+                                    <InputField state={pincode} setState={setPincode} title={"Pincode"} name={"pincode"} />
+                                    <InputField state={state} setState={setState} title={"State"} name={"state"} />
+
                                     <div className="checkout-form-field" style={{ width: "82.5%" }}>
-                                        <input type="text" />
-                                        <label>Address</label>
+                                        <input
+                                            name='address'
+                                            value={address}
+                                            onChange={(e) => setAddress(e.target.value)}
+                                            type="text"
+                                        />
+                                        {address === '' && <label>Address</label>}
                                     </div>
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>City</label>
-                                    </div>
-                                    <div className="checkout-form-field">
-                                        <input type="text" />
-                                        <label>Landmark</label>
-                                    </div>
+
+                                    <InputField state={city} setState={setCity} title={"City"} name={"city"} />
+                                    <InputField state={landmark} setState={setLandmark} title={"Landmark"} name={"landmark"} />
+
                                 </div>
                                 <div className="checkout-submit-btn">
-                                    <button onClick={() => { setOpen(!open) }}>Deliver Here</button>
+                                    <button onClick={() => { setOpen(!open) }}>Save And Deliver Here</button>
                                     <Link to={'/cart'}>cancel</Link>
 
                                 </div>
-                            </form>
-                        )}
+
+                            </>)}
+
+
+
+                            <div className="checkout-add-heading">
+                                Payment
+                            </div>
+                            <div className="checkout-form">
+
+                                <div className="checkout-payment-opt">
+                                    <input type="radio" />
+                                    <label htmlFor="">UPI</label>
+                                </div>
+                                <div className="checkout-payment-opt">
+                                    <input type="radio" />
+                                    <label htmlFor="">Cash On Delivery</label>
+                                </div>
+
+                            </div>
+                            <div className="checkout-submit-btn">
+                                <button onClick={submitHandler}>Place Order</button>
+                                <Link to={'/cart'}>cancel</Link>
+                            </div>
+                        </form>
+
                     </div>
 
                     {/*  */}
@@ -84,7 +135,7 @@ const Checkout = () => {
 
                             </div>
                             <div className="checkout-submit-btn">
-                                <button>Place Order</button>
+                                <button onClick={submitHandler}>Place Order</button>
                                 <Link to={'/cart'}>cancel</Link>
                             </div>
                         </form>
@@ -114,6 +165,20 @@ const Checkout = () => {
             </div>
         </div>
 
+    )
+}
+
+const InputField = ({ state, setState, title, name }) => {
+    return (
+        <div className="checkout-form-field">
+            <input
+                name={name}
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                type="text"
+            />
+            {state === '' && <label>{title}</label>}
+        </div>
     )
 }
 

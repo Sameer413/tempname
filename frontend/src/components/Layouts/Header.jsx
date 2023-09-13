@@ -14,7 +14,7 @@ const Header = ({ isAuthenticated, role }) => {
 
     const user = isAuthenticated;
     const dispatch = useDispatch();
-    console.log(isAuthenticated);
+
     const logoutHandler = () => {
         dispatch(logoutUser())
     }
