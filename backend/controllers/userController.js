@@ -5,7 +5,7 @@ import bcrypt from "bcrypt"
 import sendToken from "../utils/sendToken.js"
 
 export const createUser = catchAsync(async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password, firstName, lastName } = req.body;
 
     if (!email || !password) {
         return next(new ErrorHandler("Enter all fields!", 400));
@@ -20,8 +20,8 @@ export const createUser = catchAsync(async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         const newUser = await User.create({
-            firstName: "user",
-            lastName: "user",
+            firstName,
+            lastName,
             email,
             password: hashedPassword,
         });
@@ -81,8 +81,8 @@ export const updateUser = catchAsync(async (req, res, next) => {
     const user = await User.findById(req.user._id);
 
     if (firstName) user.firstName = firstName;
-    if (lastName) user.firstName = lastName;
-    if (email) user.firstName = email;
+    if (lastName) user.lastName = lastName;
+    if (email) user.email = email;
 
     await user.save();
 

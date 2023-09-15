@@ -4,6 +4,7 @@ import profileAvatar from '../../assets/profile_avatar.svg'
 import { BsBoxFill } from 'react-icons/bs'
 import { FaUserAlt } from 'react-icons/fa'
 import { IoMdWallet } from 'react-icons/io'
+import { Link } from 'react-router-dom'
 
 
 const ProfileNav = () => {
@@ -19,7 +20,7 @@ const ProfileNav = () => {
             <div className="profile-nav-main">
                 <div className="profile-nav-orders">
                     <BsBoxFill color='#2874f0' size={20} />
-                    <span>My Orders</span>
+                    <Link to={'/myorders'}>My Orders</Link>
                 </div>
                 {/*  */}
                 <div className="profile-navigation">
@@ -101,7 +102,7 @@ const Wrapper = styled.div`
             align-items: center;
             box-shadow: 0 1px 1px 0 rgba(0, 0, 0, .16);
 
-            &>span{
+            &>a{
                 width: calc(100% - 26px);
                 padding-left: 20px;
                 font-size: 16px;

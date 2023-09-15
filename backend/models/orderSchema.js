@@ -6,25 +6,25 @@ const Schema = new mongoose.Schema({
         required: true,
         ref: "User"
     },
-    // products: [{
-    //     product: {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         required: true,
-    //         ref: "Product"
-    //     },
-    //     quantity: {
-    //         type: Number,
-    //         required: true,
-    //     },
-    //     price: {
-    //         type: Number,
-    //         required: true,
-    //     },
-    // }],
-    // totalPrice: {
-    //     type: Number,
-    //     required: true,
-    // },
+    products: [{
+        product: {
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Product"
+        },
+        quantity: {
+            type: Number,
+            required: true,
+        },
+        price: {
+            type: Number,
+            required: true,
+        },
+    }],
+    totalPrice: {
+        type: Number,
+        required: true,
+    },
     address: {
         name: {
             type: String,

@@ -1,8 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { styled } from 'styled-components';
 import second from '../../assets/iphone.webp'
+import { useDispatch, useSelector } from 'react-redux'
+import { adminOrder, updateOrderStatus } from '../../redux/features/OrderFeatures/OrderSlic';
 
-const Orders = () => {
+const Orders = ({ title, price, status, dispatch, id }) => {
+    const [select, setStatus] = useState(status)
+    const selectChange = (e) => {
+        setStatus(e.target.value)
+    }
+    const updateStatus = (id, select) => {
+        dispatch(updateOrderStatus({ id: id, status: select }))
+    }
     return (
         <Wrapper>
             <div className="order-card-main">
@@ -12,27 +21,27 @@ const Orders = () => {
                         <img src={second} alt="" />
                     </div>
                     <div className="order-card-name">
-                        APPLE iPhone 11 (64 GB, White)
+                        {title}
                     </div>
 
                 </div>
 
                 <div className="order-price">
-                    ₹449
+                    ₹{price}
                 </div>
 
                 <div className="order-status">
                     <div className="status-point"></div>
-                    <span>Delivered on Aug 12</span>
+                    <span>{status} </span>
                     <div className="status-info">Your item has been delivered</div>
                 </div>
                 <div className="update-order">
-                    <select>
-                        <option value="">Shipped</option>
-                        <option value="">Deliverd</option>
-                        <option value="">Cancel</option>
+                    <select value={select} onChange={selectChange}>
+                        <option >Shipped</option>
+                        <option >Deliverd</option>
+                        <option >Cancel</option>
                     </select>
-                    <button>Update Status</button>
+                    <button onClick={() => updateStatus(id, select)}>Update Status</button>
                 </div>
             </div>
         </Wrapper>
@@ -41,9 +50,28 @@ const Orders = () => {
 }
 
 const AdminOrders = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(adminOrder())
+    }, []);
+
+    const { orders } = useSelector(state => state.order)
+
+
     return (
         <Wrapping>
-            <Orders />
+            {orders && orders.orderDetails.map((order) => (
+                <Orders
+                    key={order?.id}
+                    title={order?.products[0].product.name}
+                    price={order?.products[0].product.price}
+                    status={order?.status}
+                    dispatch={dispatch}
+                    id={order?.id}
+                />
+            ))}
         </Wrapping>
     )
 }

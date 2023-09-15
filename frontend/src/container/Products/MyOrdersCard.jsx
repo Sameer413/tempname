@@ -3,7 +3,7 @@
 import { styled } from "styled-components"
 import second from '../../assets/iphone.webp'
 
-const MyOrdersCard = () => {
+const MyOrdersCard = ({ prodName, price, status }) => {
     return (
         <Wrapper>
             <div className="order-card-main">
@@ -13,18 +13,18 @@ const MyOrdersCard = () => {
                         <img src={second} alt="" />
                     </div>
                     <div className="order-card-name">
-                        APPLE iPhone 11 (64 GB, White)
+                        {prodName}
                     </div>
 
                 </div>
 
                 <div className="order-price">
-                    ₹449
+                    ₹{price}
                 </div>
 
                 <div className="order-status">
                     <div className="status-point"></div>
-                    <span>Delivered on Aug 12</span>
+                    <span>{status} on Aug 12</span>
                     <div className="status-info">Your item has been delivered</div>
                 </div>
             </div>

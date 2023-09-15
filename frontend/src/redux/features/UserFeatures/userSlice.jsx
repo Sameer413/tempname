@@ -38,7 +38,6 @@ export const registerUser = createAsyncThunk(
     }
 );
 
-
 export const logoutUser = createAsyncThunk(
     // This must be unique for each case
     'user/logoutUser',
@@ -66,6 +65,39 @@ export const userMe = createAsyncThunk(
     }
 )
 
+export const updateProfile = createAsyncThunk(
+    'user/update',
+    async (credential, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.put('http://localhost:5000/me/update',
+                credential,
+                {
+                    withCredentials: true
+                }
+            )
+            return apiResponse.data;
+        } catch (error) {
+            return rejectWithValue(error.response.message)
+        }
+    }
+);
+
+export const updatePassword = createAsyncThunk(
+    'user/updatePassword',
+    async (credential, { rejectWithValue }) => {
+        try {
+            const apiResponse = await axios.put('http://localhost:5000/me/update/password',
+                credential,
+                {
+                    withCredentials: true
+                }
+            )
+            return apiResponse.data;
+        } catch (error) {
+            return rejectWithValue(error.response.msg)
+        }
+    }
+)
 
 const initialState = {
     user: null,
@@ -141,6 +173,32 @@ const userSlice = createSlice({
                 state.loading = false;
                 state.user = null;
                 state.error = action.payload ? action.payload.message : 'Failed to Load User';
+            })
+            .addCase(updateProfile.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updateProfile.fulfilled, (state) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(updateProfile.rejected, (state, action) => {
+                state.loading = false;
+                state.user = null;
+                state.error = action.payload ? action.payload.message : 'Failed to Update User';
+            })
+            .addCase(updatePassword.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(updatePassword.fulfilled, (state) => {
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(updatePassword.rejected, (state, action) => {
+                state.loading = false;
+                state.user = null;
+                state.error = action.payload ? action.payload.message : 'Failed to Update Password';
             })
     }
 });

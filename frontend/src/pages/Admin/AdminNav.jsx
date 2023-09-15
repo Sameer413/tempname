@@ -66,6 +66,8 @@ const AdminMain = () => {
 const Wrapper = styled.div`
     height: 100vh;
     width: 20%;
+    position: sticky;
+    top: 0;
 
     &>.admin-navbar{
         height: 100%;

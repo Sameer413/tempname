@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import './Checkout.css'
 import flipLogo from '../../assets/flip-logo.png'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { createOrder } from '../../redux/features/OrderFeatures/OrderSlic'
 
 const Checkout = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [open, setOpen] = useState(true)
 
@@ -28,10 +29,20 @@ const Checkout = () => {
         landmark: landmark
     }
 
+    const productData = JSON.parse(localStorage.getItem('cartProducts'));
+    const totalPrice = localStorage.getItem('totalPrice')
+
+
     const submitHandler = (e) => {
         e.preventDefault()
-        dispatch(createOrder({ address: addressData }));
+        const apiResponse = dispatch(createOrder({ address: addressData, products: productData, totalPrice: totalPrice }));
+        console.log(apiResponse.type);
+        if (apiResponse.type === "order/createOrder/fulfilled" || undefined) {
+            navigate("/")
+        }
+
     }
+
     return (
         <div className="checkout">
             <header className="checkout-header">
@@ -115,43 +126,18 @@ const Checkout = () => {
 
                     </div>
 
-                    {/*  */}
-                    {/* <div className="checkout-address">
-                        <div className="checkout-add-heading">
-                            Payment
-                        </div>
-
-                        <form action="">
-                            <div className="checkout-form">
-
-                                <div className="checkout-payment-opt">
-                                    <input type="radio" />
-                                    <label htmlFor="">UPI</label>
-                                </div>
-                                <div className="checkout-payment-opt">
-                                    <input type="radio" />
-                                    <label htmlFor="">Cash On Delivery</label>
-                                </div>
-
-                            </div>
-                            <div className="checkout-submit-btn">
-                                <button onClick={submitHandler}>Place Order</button>
-                                <Link to={'/cart'}>cancel</Link>
-                            </div>
-                        </form>
-                    </div> */}
                 </div>
 
                 {/*  */}
                 <div className="checkout-right">
                     <div className="cart-right-heading">Price Details</div>
                     <div className="cart-right-pricing">
-                        <span>Price(3 item)</span>
-                        <span>₹59,999</span>
+                        <span>Price({productData.length + " item"})</span>
+                        <span>₹{totalPrice}</span>
                     </div>
                     <div className="cart-right-disc">
                         <span>Discount</span>
-                        <span>-₹59,999</span>
+                        <span>-₹{totalPrice}</span>
                     </div>
                     <div className="cart-right-delivery">
                         <span>Delivery Charges</span>
@@ -159,7 +145,7 @@ const Checkout = () => {
                     </div>
                     <div className="cart-right-total">
                         <span>Total Ammount</span>
-                        <span>₹59,999</span>
+                        <span>₹{totalPrice}</span>
                     </div>
                 </div>
             </div>

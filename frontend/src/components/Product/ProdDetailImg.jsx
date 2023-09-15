@@ -16,17 +16,22 @@ const ProdDetailImg = ({ product }) => {
         dispatch(addToCart(params.id));
     }
 
+
     const saveProductToLocalStorage = (product) => {
         localStorage.removeItem('cartProducts')
         const existingProducts = JSON.parse(localStorage.getItem('cartProducts')) || [];
         existingProducts.push(product);
         localStorage.setItem('cartProducts', JSON.stringify(existingProducts));
+        // Total Price
+        localStorage.removeItem('totalPrice')
+        localStorage.setItem('totalPrice', price);
     };
-    const price = product?.price;
     // Example usage
+    const price = product?.price;
+
     const productToAdd = {
-        id: params.id,
-        qty: 1,
+        product: params.id,
+        quantity: 1,
         price: price
     };
 

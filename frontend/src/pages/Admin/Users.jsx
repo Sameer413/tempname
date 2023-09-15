@@ -20,7 +20,7 @@ const AdminUserCard = ({ name, email, role, id, dispatch }) => {
                 <div className="adm-user-details">
                     <img src={avatar} alt="" />
                     <div>
-                        <span>{name ? name : ""}</span>
+                        <span>{name}</span>
                         <span>{email ? email : ""}</span>
                     </div>
                 </div>

@@ -1,7 +1,35 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { styled } from 'styled-components'
+import { useDispatch } from 'react-redux'
+import { updateProfile, updatePassword } from '../../redux/features/UserFeatures/userSlice';
 
 const ProfileSection = () => {
+    const [firstName, setName] = useState('');
+    const [lastName, setLastName] = useState('');
+    const [email, setEmail] = useState('');
+    const [currentPassword, setCurrentPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+
+
+    const dispatch = useDispatch();
+
+    const updateHandler = async (e) => {
+        e.preventDefault();
+        const apiResponse = await dispatch(updateProfile({ firstName: firstName, lastName: lastName }))
+        if (apiResponse.type === "user/update/fulfilled") {
+            window.location.reload();
+        }
+    }
+
+    const updatePassHandler = async (e) => {
+        e.preventDefault()
+        const apiResponse = await dispatch(updatePassword({ oldPassword: currentPassword, newPassword: newPassword, confirmPassword: confirmPassword }))
+        if (apiResponse.type === "user/updatePassword/fulfilled") {
+            window.location.reload();
+        }
+
+    }
     return (
         <Wrapper>
             <div>
@@ -10,15 +38,27 @@ const ProfileSection = () => {
                     <div className="pl-heading">
                         Personal Information <span>Edit</span>
                     </div>
-                    <form action="">
+                    <form action="" onSubmit={updateHandler}>
                         <div className="pl-field-box">
                             <div>
-                                <input type="text" />
+                                <input
+                                    name='firstName'
+                                    value={firstName}
+                                    onChange={(e) => setName(e.target.value)}
+                                    placeholder='First Name'
+                                    type="text"
+                                />
                             </div>
                             <div>
-                                <input type="text" />
+                                <input
+                                    name='lastName'
+                                    value={lastName}
+                                    onChange={(e) => setLastName(e.target.value)}
+                                    placeholder='Last Name'
+                                    type="text"
+                                />
                             </div>
-                            <button>Save</button>
+                            <button type='submit'>Save</button>
                         </div>
                     </form>
                 </div>
@@ -30,9 +70,14 @@ const ProfileSection = () => {
                     <form action="">
                         <div className="pl-field-box">
                             <div>
-                                <input type="text" />
+                                <input
+                                    name='email'
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                    type="email"
+                                />
                             </div>
-                            <button>Save</button>
+                            <button onClick={(e) => { e.preventDefault(); dispatch(updateProfile({ email: email })) }}>Save</button>
                         </div>
                     </form>
                 </div>
@@ -40,18 +85,36 @@ const ProfileSection = () => {
                     <div className="pl-heading">
                         Change Password <span>Edit</span>
                     </div>
-                    <form action="">
+                    <form action="" onSubmit={updatePassHandler}>
                         <div className="pl-field-box">
                             <div>
-                                <input type="text" />
+                                <input
+                                    name="oldPassword"
+                                    placeholder='current Password'
+                                    value={currentPassword}
+                                    onChange={(e) => setCurrentPassword(e.target.value)}
+                                    type="password"
+                                />
                             </div>
                             <div>
-                                <input type="text" />
+                                <input
+                                    name="newPassword"
+                                    placeholder='new Password'
+                                    value={newPassword}
+                                    onChange={(e) => setNewPassword(e.target.value)}
+                                    type="password"
+                                />
                             </div>
                             <div>
-                                <input type="text" />
+                                <input
+                                    name="confirmPassword"
+                                    placeholder='confirm Password'
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    type="password"
+                                />
                             </div>
-                            <button>Save</button>
+                            <button type="submit">Save</button>
                         </div>
                     </form>
                 </div>

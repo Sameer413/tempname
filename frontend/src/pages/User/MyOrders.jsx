@@ -2,8 +2,19 @@
 import { BsSearch } from 'react-icons/bs'
 import { styled } from 'styled-components'
 import MyOrdersCard from '../../container/Products/MyOrdersCard'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { userOrder } from '../../redux/features/OrderFeatures/OrderSlic'
 
 const MyOrders = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(userOrder())
+    }, []);
+
+    const { orders } = useSelector(state => state.order)
+
     return (
         <Wrapper>
             <div className="">
@@ -15,11 +26,14 @@ const MyOrders = () => {
                 </div>
                 {/*  */}
                 <div className="my-orders-list">
-                    <MyOrdersCard />
-                    <MyOrdersCard />
-                    <MyOrdersCard />
-                    <MyOrdersCard />
-                    <MyOrdersCard />
+                    {orders && orders.orderDetails.map((order) => (
+                        <MyOrdersCard
+                            key={order?.id}
+                            prodName={order?.products[0].product.name}
+                            price={order?.products[0].product.price}
+                            status={order?.status}
+                        />
+                    ))}
                 </div>
             </div>
         </Wrapper>
