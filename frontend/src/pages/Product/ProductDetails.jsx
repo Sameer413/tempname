@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom'
 import { fetchProductD } from '../../redux/features/ProductFeatures/productSlice';
+import Loader from '../../components/Layouts/Loader'
 
 const ProductDetails = () => {
 
@@ -15,22 +16,26 @@ const ProductDetails = () => {
         { dispatch(fetchProductD(params.id)) }
     }, [])
 
-    const { product } = useSelector(state => state.product);
+    const { product, loading } = useSelector(state => state.product);
 
     return (
         <Wrapper>
-            <div className="product-details">
-                <ProdDetailImg
-                    product={product?.product}
-                />
-                <ProdDetail_Info
-                    name={product?.product.name}
-                    description={product?.product.description}
-                    price={product?.product.price}
-                    ratings={product?.product.ratings}
-                    reviews={product?.product.reviews}
-                />
-            </div>
+            {loading ? (
+                <Loader minheight={"100%"} size={"50px"} width={"50px"} />
+            ) : (
+                <div className="product-details">
+                    <ProdDetailImg
+                        product={product?.product}
+                    />
+                    <ProdDetail_Info
+                        name={product?.product.name}
+                        description={product?.product.description}
+                        price={product?.product.price}
+                        ratings={product?.product.ratings}
+                        reviews={product?.product.reviews}
+                    />
+                </div>
+            )}
         </Wrapper>
     )
 }

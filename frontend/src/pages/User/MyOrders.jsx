@@ -5,6 +5,7 @@ import MyOrdersCard from '../../container/Products/MyOrdersCard'
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from 'react'
 import { userOrder } from '../../redux/features/OrderFeatures/OrderSlic'
+import Loader from '../../components/Layouts/Loader'
 
 const MyOrders = () => {
     const dispatch = useDispatch();
@@ -13,29 +14,37 @@ const MyOrders = () => {
         dispatch(userOrder())
     }, []);
 
-    const { orders } = useSelector(state => state.order)
+    const { orders, loading } = useSelector(state => state.order)
 
     return (
         <Wrapper>
-            <div className="">
-                <div className="my-orders-search">
-                    <div className="orders-search-input">
-                        <input type="text" placeholder='Search your order here' />
+
+            {loading ? (
+                <Loader minheight={"100%"} size={"50px"} width={"50px"} />
+
+            ) : (
+                <div className="">
+                    <div className="my-orders-search">
+                        <div className="orders-search-input">
+                            <input type="text" placeholder='Search your order here' />
+                        </div>
+                        <button> <BsSearch size={16} /> <span>Search Orders</span></button>
                     </div>
-                    <button> <BsSearch size={16} /> <span>Search Orders</span></button>
+                    {/*  */}
+
+                    <div className="my-orders-list">
+                        {orders && orders.orderDetails.map((order) => (
+                            <MyOrdersCard
+                                key={order?.id}
+                                prodName={order?.products[0].product.name}
+                                price={order?.products[0].product.price}
+                                status={order?.status}
+                            />
+                        ))}
+                    </div>
+
                 </div>
-                {/*  */}
-                <div className="my-orders-list">
-                    {orders && orders.orderDetails.map((order) => (
-                        <MyOrdersCard
-                            key={order?.id}
-                            prodName={order?.products[0].product.name}
-                            price={order?.products[0].product.price}
-                            status={order?.status}
-                        />
-                    ))}
-                </div>
-            </div>
+            )}
         </Wrapper>
     )
 }

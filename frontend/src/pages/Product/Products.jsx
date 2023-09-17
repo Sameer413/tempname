@@ -1,25 +1,20 @@
 import { styled } from "styled-components"
 import Filter from "../../components/Products/Filter";
 import ProductList from "../../components/Products/ProductList";
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { useEffect } from "react";
 import { fetchProducts } from "../../redux/features/ProductFeatures/productSlice";
+import Loader from '../../components/Layouts/Loader'
 
 const Products = () => {
-    const dispatch = useDispatch();
-    // const { loading } = useSelector(state => state.product)
-    useEffect(() => {
-        dispatch(fetchProducts())
-    }, [])
-
 
     return (
         <Wrapper>
-
             <div>
                 <Filter />
                 <ProductList />
             </div>
+
         </Wrapper>
     )
 }

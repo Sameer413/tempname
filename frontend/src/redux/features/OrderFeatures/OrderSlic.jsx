@@ -80,7 +80,7 @@ const OrderSlice = createSlice({
                 state.error = action.error.message;
             })
             .addCase(userOrder.pending, (state) => {
-                state.loading = false;
+                state.loading = true;
                 state.error = null;
             })
             .addCase(userOrder.fulfilled, (state, action) => {

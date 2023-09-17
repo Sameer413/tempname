@@ -15,7 +15,7 @@ function App() {
 
   return (
     <>
-      <Main isAuthenticated={isAuthenticated} role={user?.user?.role} />
+      <Main isAuthenticated={isAuthenticated} role={user?.role} />
     </>
   )
 }
